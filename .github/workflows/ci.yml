@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Build and check
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Toolchain
+        run: |
+          swift --version
+          sw_vers
+
+      - name: Run checks
+        run: ./Tests/run-tests.sh
+
+      - name: Build the app bundle
+        run: ./build.sh release
+
+      - name: Verify the bundle
+        run: |
+          test -x dist/Mishka.app/Contents/MacOS/Mishka
+          test -f dist/Mishka.app/Contents/Info.plist
+          /usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" dist/Mishka.app/Contents/Info.plist

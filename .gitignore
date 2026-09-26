@@ -1,0 +1,16 @@
+# Сборка
+.build/
+.swiftpm/
+dist/
+*.xcodeproj
+xcuserdata/
+
+# Кэш компилятора (см. docs/DEVELOPMENT.md)
+.dsh-modulecache/
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
